@@ -640,19 +640,19 @@
       <div class="row text-center">
         <div class="col-md-3">
           <div class="stat-item">
-            <div class="stat-number" data-value="4">0+</div>
+            <div class="stat-number" data-value="4" data-suffix="+">0</div>
             <div class="stat-label">Projects</div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="stat-item">
-            <div class="stat-number" data-value="100">0%</div>
+            <div class="stat-number" data-value="100" data-suffix="%">0</div>
             <div class="stat-label">Responsive</div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="stat-item">
-            <div class="stat-number" data-value="3">0+</div>
+            <div class="stat-number" data-value="3" data-suffix="+">0</div>
             <div class="stat-label">Technologies</div>
           </div>
         </div>
@@ -752,7 +752,7 @@
       });
     });
   </script>
-  <script>
+<script>
   const counters = document.querySelectorAll('.stat-number[data-value]');
   let started = false;
 
@@ -761,22 +761,17 @@
     started = true;
 
     counters.forEach(counter => {
-      const target = +counter.getAttribute('data-value');
-      const isPercent = counter.innerText.includes('%');
-      const isPlus = counter.innerText.includes('+');
-
+      const target = +counter.dataset.value;
+      const suffix = counter.dataset.suffix || '';
       let count = 0;
-      const speed = 30;
 
       const update = () => {
-        count++;
-        if (count <= target) {
-          counter.innerText =
-            count + (isPercent ? '%' : isPlus ? '+' : '');
+        if (count < target) {
+          count++;
+          counter.innerText = count + suffix;
           requestAnimationFrame(update);
         } else {
-          counter.innerText =
-            target + (isPercent ? '%' : isPlus ? '+' : '');
+          counter.innerText = target + suffix;
         }
       };
 
@@ -795,8 +790,10 @@
   observer.observe(document.querySelector('.stats'));
 </script>
 
+
 </body>
 </html>
+
 
 
 
